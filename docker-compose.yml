@@ -1,1 +1,11 @@
-#To Finish it by the end of the day
+services:
+  dataset-container:
+    image: dockerized-dataset-image:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - data:/os_project/outputs/
+
+volumes:
+  data:
