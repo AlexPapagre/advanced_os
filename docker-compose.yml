@@ -1,11 +1,6 @@
 services:
   dataset-container:
-    image: dockerized-dataset-image:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     volumes:
-      - data:/os_project/outputs/
-
-volumes:
-  data:
+      - ./outputs:/app/outputs
+      - ./data:/app/data
