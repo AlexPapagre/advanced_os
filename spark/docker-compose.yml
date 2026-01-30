@@ -1,0 +1,9 @@
+services:
+  dataset-container:
+    build: .
+    ports:
+      - "8080:8080"
+      - "4040:4040"
+    volumes:
+      - ./outputs:/app/outputs
+      - ./data:/app/data

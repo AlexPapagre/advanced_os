@@ -2,47 +2,27 @@ import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from tqdm import tqdm
 
-tqdm.pandas()
-
+# Step 0: Setup
 output_folder = "outputs"
 if not os.path.exists(output_folder):
     os.makedirs(output_folder)
 
-steps = [
-    "Loading dataset",
-    "Cleaning data",
-    "Running analytics",
-    "Generating plots",
-    "Writing results",
-]
-
-progress = tqdm(total=len(steps), desc="Starting...")
-
 # Step 1: Load dataset
-progress.set_description(steps[0])
 df = pd.read_csv(
     "data/horse_racing.csv", dtype={"sex_rest": "category"}, low_memory=False
 )
-progress.update(1)
-
 
 # Step 2: Cleaning data
-progress.set_description(steps[1])
 df["age"] = pd.to_numeric(df["age"], errors="coerce")
 df["pos"] = df["pos"].astype(str)
-progress.update(1)
 
 # Step 3: Running analytics
-progress.set_description(steps[2])
 race_counts = df["course"].value_counts()
 avg_age = df.groupby("course")["age"].mean()
 position_counts = df["pos"].value_counts()
-progress.update(1)
 
 # Step 4: Generating plots
-progress.set_description(steps[3])
 plt.figure(figsize=(8, 5))
 race_counts.head(15).plot(kind="bar", color="skyblue")
 plt.title("Number of Horses per Course")
@@ -62,19 +42,16 @@ plt.xticks(rotation=45)
 plt.tight_layout()
 plt.savefig(os.path.join(output_folder, "avg_age_per_course.png"))
 plt.close()
-progress.update(1)
 
 # Step 5: Writing results
-progress.set_description(steps[4])
 with open(os.path.join(output_folder, "analytics_results.txt"), "w") as f:
-    f.write("=== Horse Racing Dataset Analytics ===\n\n")
+    f.write("=== Horse Racing Analytics ===\n\n")
+
     f.write("Number of horses per course:\n")
     f.write(race_counts.to_string())
+
     f.write("\n\nAverage age of horses per course:\n")
     f.write(avg_age.round(2).to_string())
+
     f.write("\n\nNumber of horses per finishing position:\n")
     f.write(position_counts.to_string())
-progress.update(1)
-
-progress.set_description("Completed")
-progress.close()
