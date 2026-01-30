@@ -1,6 +1,7 @@
 services:
-  dataset-container:
+  pandas:
     build: .
+    container_name: pandas-app
     volumes:
-      - ./outputs:/app/outputs
       - ./data:/app/data
+      - ./outputs:/app/outputs
