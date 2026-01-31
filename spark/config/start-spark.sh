@@ -12,4 +12,6 @@ echo "Spark Master URL: $MASTER_URL"
 
 echo "Spark REST is in port 6066."
 
+echo "HOSTNAME: $(hostname)"
+
 tail -f /dev/null

@@ -3,5 +3,5 @@ services:
     build: .
     container_name: pandas-app
     volumes:
-      - ./data:/app/data
-      - ./outputs:/app/outputs
+      - ./data:/opt/data
+      - ./outputs:/opt/outputs

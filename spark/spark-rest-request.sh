@@ -7,14 +7,14 @@ fi
 
 HOSTNAME=$1
 
-curl -X POST http://"$HOSTNAME":6066/v1/submissions/create \
+curl -X POST http://localhost:6066/v1/submissions/create \
     -H "Content-Type:application/json;charset=UTF-8" \
     -d "{
     \"action\": \"CreateSubmissionRequest\",
-    \"appResource\": \"file:///app/main.py\",
+    \"appResource\": \"file:///opt/main.py\",
     \"clientSparkVersion\": \"3.4.2\",
     \"mainClass\": \"org.apache.spark.deploy.PythonRunner\",
-    \"appArgs\": [\"/app/main.py\", \"\", \"\"],
+    \"appArgs\": [\"/opt/main.py\", \"\", \"\"],
     \"environmentVariables\": {},
     \"sparkProperties\": {
       \"spark.app.name\": \"MainPy\",
