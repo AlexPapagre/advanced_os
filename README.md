@@ -14,6 +14,10 @@ The dataset used is [Horse Racing Results - UK/Ireland 2015 - 2025](https://www.
 
 ```bash
 .
+├── llm
+│   ├── main.py
+│   └── outputs
+│       └── llm_summary.txt
 ├── pandas
 │   ├── build.sh
 │   ├── data
@@ -21,6 +25,10 @@ The dataset used is [Horse Racing Results - UK/Ireland 2015 - 2025](https://www.
 │   ├── docker-compose.yml
 │   ├── Dockerfile
 │   ├── main.py
+│   ├── outputs
+│   │   ├── analytics_results.txt
+│   │   ├── avg_age_per_course.png
+│   │   └── races_per_course.png
 │   ├── requirements.txt
 │   └── run.sh
 ├── README.md
@@ -45,7 +53,7 @@ The dataset used is [Horse Racing Results - UK/Ireland 2015 - 2025](https://www.
 
 ## Running the Project with Docker
 
-There are 2 sub projects:
+There are 2 sub projects to analyze the dataset:
 
 - `pandas` uses the Pandas library to perform the analytics
 - `spark` uses the Apache Spark library to perform the analytics
@@ -145,3 +153,23 @@ After the user sends the request, the program will:
 - Generate analytics results in `outputs/` directory and print them to `stdout`
 
 The projet stays open and waits for the user to send another request.
+
+---
+
+## Using the Local LLM Model
+
+The Local LLM Model used is `Mistral 7B`.
+
+To use it, you need to install and open `LM Studio` and install the `Mistral 7B` model.
+
+After installing the model, you need to start the LM Studio server and load the model.
+
+Then you can use the `main.py` script to run the project.
+
+```bash
+cd llm
+
+python main.py
+```
+
+After running the script, an output directory will be created with the response from the LLM.
