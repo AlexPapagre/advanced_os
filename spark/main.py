@@ -8,11 +8,6 @@ DATA_PATH = "/opt/data/horse_racing.csv"
 OUTPUT_DIR = "/opt/outputs"
 ANALYTICS_FILE = os.path.join(OUTPUT_DIR, "analytics_results.txt")
 
-LM_STDUIO_URL = ""
-MODEL_NAME = "mistral-7b-instruct"
-LLM_SUMMARY_FILE = os.path.join(OUTPUT_DIR, "llm_summary.txt")
-
-
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 spark = SparkSession.builder.appName("Horse Racing Analytics").getOrCreate()
@@ -58,26 +53,5 @@ with open(ANALYTICS_FILE, "w") as f:
     write_and_print(f, "\nNumber of horses per finishing position:\n")
     for row in position_counts.collect():
         write_and_print(f, f"{row['pos']}: {row['count']}\n")
-
-# Step 5: Send output to offline LLM
-with open(ANALYTICS_FILE, "r") as f:
-    analytics_text = f.read()
-
-prompt = f"""
-1234
-
-Analytics output:
-{analytics_text}
-"""
-
-summary = ""
-
-# Step 6: Save LLM summary
-with open(LLM_SUMMARY_FILE, "w") as f:
-    f.write(summary)
-
-print("\n=== LLM Summary ===\n")
-print(summary)
-print("\n")
 
 spark.stop()
