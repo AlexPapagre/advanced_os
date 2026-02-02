@@ -1,13 +1,23 @@
 import os
+import sys
 
 import requests
 
 # Step 0: Setup
 OUTPUT_DIR = "outputs"
-ANALYTICS_FILE = "../spark/outputs/analytics_results.txt"
+PANDAS_ANALYTICS_FILE = "../pandas/outputs/analytics_results.txt"
+SPARK_ANALYTICS_FILE = "../spark/outputs/analytics_results.txt"
 LLM_SUMMARY_FILE = os.path.join(OUTPUT_DIR, "llm_summary.txt")
 LM_STUDIO_URL = "http://localhost:1234/v1/chat/completions"
 MODEL_NAME = "mistral-7b-instruct"
+
+if os.path.exists(PANDAS_ANALYTICS_FILE):
+    analytics_file_path = PANDAS_ANALYTICS_FILE
+elif os.path.exists(SPARK_ANALYTICS_FILE):
+    analytics_file_path = SPARK_ANALYTICS_FILE
+else:
+    print("No analytics file found!")
+    sys.exit(1)
 
 try:
     requests.get(LM_STUDIO_URL)
@@ -24,7 +34,7 @@ def write_and_print(f, text):
 
 
 # Step 1: Create the request
-with open(ANALYTICS_FILE, "r") as f:
+with open(analytics_file_path, "r") as f:
     analytics_text = f.read()
 
 analytics_text = analytics_text[:3000]
