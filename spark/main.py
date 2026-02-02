@@ -4,9 +4,11 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import avg, col
 
 # Step 0: Setup
-output_folder = "/opt/outputs"
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+DATA_PATH = "/opt/data/horse_racing.csv"
+OUTPUT_DIR = "/opt/outputs"
+ANALYTICS_FILE = os.path.join(OUTPUT_DIR, "analytics_results.txt")
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 spark = SparkSession.builder.appName("Horse Racing Analytics").getOrCreate()
 
@@ -17,7 +19,7 @@ def write_and_print(f, text):
 
 
 # Step 1: Load dataset
-df = spark.read.csv("/opt/data/horse_racing.csv", header=True, inferSchema=True)
+df = spark.read.csv(DATA_PATH, header=True, inferSchema=True)
 
 # Step 2: Cleaning data
 df = df.withColumn("age", col("age").cast("double")).withColumn(
@@ -34,7 +36,7 @@ avg_age = (
 position_counts = df.groupBy("pos").count().orderBy(col("count").desc())
 
 # Step 4: Writing results
-with open(os.path.join(output_folder, "analytics_results.txt"), "w") as f:
+with open(ANALYTICS_FILE, "w") as f:
     write_and_print(f, "=== Horse Racing Analytics ===\n\n")
 
     write_and_print(f, "Number of horses per course:\n")

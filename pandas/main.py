@@ -4,14 +4,16 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Step 0: Setup
-output_folder = "outputs"
-if not os.path.exists(output_folder):
-    os.makedirs(output_folder)
+DATA_PATH = "data/horse_racing.csv"
+OUTPUT_DIR = "outputs"
+RACES_PER_COURSE_FILE = os.path.join(OUTPUT_DIR, "races_per_course.png")
+AVG_AGE_PER_COURSE_FILE = os.path.join(OUTPUT_DIR, "avg_age_per_course.png")
+ANALYTICS_FILE = os.path.join(OUTPUT_DIR, "analytics_results.txt")
+
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # Step 1: Load dataset
-df = pd.read_csv(
-    "data/horse_racing.csv", dtype={"sex_rest": "category"}, low_memory=False
-)
+df = pd.read_csv(DATA_PATH, dtype={"sex_rest": "category"}, low_memory=False)
 
 # Step 2: Cleaning data
 df["age"] = pd.to_numeric(df["age"], errors="coerce")
@@ -30,7 +32,7 @@ plt.ylabel("Count")
 plt.xlabel("Course")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig(os.path.join(output_folder, "races_per_course.png"))
+plt.savefig(RACES_PER_COURSE_FILE)
 plt.close()
 
 plt.figure(figsize=(8, 5))
@@ -40,18 +42,21 @@ plt.ylabel("Average Age")
 plt.xlabel("Course")
 plt.xticks(rotation=45)
 plt.tight_layout()
-plt.savefig(os.path.join(output_folder, "avg_age_per_course.png"))
+plt.savefig(AVG_AGE_PER_COURSE_FILE)
 plt.close()
 
 # Step 5: Writing results
-with open(os.path.join(output_folder, "analytics_results.txt"), "w") as f:
+with open(ANALYTICS_FILE, "w") as f:
     f.write("=== Horse Racing Analytics ===\n\n")
 
     f.write("Number of horses per course:\n")
     f.write(race_counts.to_string())
+    f.write("\n")
 
-    f.write("\n\nAverage age of horses per course:\n")
+    f.write("\nAverage age of horses per course:\n")
     f.write(avg_age.round(2).to_string())
+    f.write("\n")
 
-    f.write("\n\nNumber of horses per finishing position:\n")
+    f.write("\nNumber of horses per finishing position:\n")
     f.write(position_counts.to_string())
+    f.write("\n")
