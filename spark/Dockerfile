@@ -20,11 +20,11 @@ COPY config/spark-env.sh $SPARK_HOME/conf/spark-env.sh
 COPY config/start-spark.sh /opt/start-spark.sh
 RUN chmod +x /opt/start-spark.sh
 
-COPY data/ /opt/data/
+WORKDIR /opt
 
-COPY main.py /opt/main.py
+COPY data/ data/
+COPY main.py .
 
 EXPOSE 8080 8081 6066 7077
 
-WORKDIR /opt
-CMD ["/opt/start-spark.sh"]
+CMD ["./start-spark.sh"]

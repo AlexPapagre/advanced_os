@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Step 0: Setup
-DATA_PATH = "data/horse_racing.csv"
-OUTPUT_DIR = "outputs"
+DATA_PATH = "/opt/data/horse_racing.csv"
+OUTPUT_DIR = "/opt/outputs"
 RACES_PER_COURSE_FILE = os.path.join(OUTPUT_DIR, "races_per_course.png")
 AVG_AGE_PER_COURSE_FILE = os.path.join(OUTPUT_DIR, "avg_age_per_course.png")
 ANALYTICS_FILE = os.path.join(OUTPUT_DIR, "analytics_results.txt")
