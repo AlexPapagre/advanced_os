@@ -63,6 +63,7 @@ Analytics output:
 
 Final answer format (follow exactly):
 Chosen horse: <horse_name>
+
 Reasoning: <concise data-driven explanation>
 """
 
